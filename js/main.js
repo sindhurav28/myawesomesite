@@ -1,27 +1,12 @@
 /* =============================================================================
-   OUR JOURNEY — HOME PAGE SCRIPT
-   Builds the fun-fact stats, the interactive map with the dotted trail,
-   the map legend, and the timeline. You normally don't need to edit this file.
+   K&S TRAVEL JOURNAL — HOME PAGE SCRIPT
+   Builds the stats dashboard, the interactive map with the trail, the legend,
+   and the timeline. You normally don't need to edit this file.
    ========================================================================== */
 
 (function () {
   const places = window.PLACES;
   const categories = window.CATEGORIES;
-
-  /* ---------- Floating hearts decoration ---------- */
-  (function hearts() {
-    const wrap = document.getElementById('hearts');
-    const symbols = ['💖', '💕', '💗', '🤍', '✨', '💞'];
-    for (let i = 0; i < 16; i++) {
-      const s = document.createElement('span');
-      s.textContent = symbols[i % symbols.length];
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (0.9 + Math.random() * 1.4) + 'rem';
-      s.style.animationDuration = (12 + Math.random() * 16) + 's';
-      s.style.animationDelay = (Math.random() * 16) + 's';
-      wrap.appendChild(s);
-    }
-  })();
 
   /* ---------- Fun-fact stats ---------- */
   (function stats() {
@@ -32,23 +17,23 @@
     const yearsTogether = new Date().getFullYear() - firstYear;
 
     const data = [
-      { emoji: '📍', num: places.length, label: 'Destinations' },
-      { emoji: '🌎', num: countries.size, label: 'Countries' },
-      { emoji: '🏞️', num: parks + '+', label: 'National Parks' },
-      { emoji: '🗺️', num: regions.size + '+', label: 'States & Regions' },
-      { emoji: '💞', num: yearsTogether + '+', label: 'Years Together' },
+      { num: places.length, label: 'Destinations' },
+      { num: countries.size, label: 'Countries' },
+      { num: parks + '+', label: 'National Parks' },
+      { num: regions.size + '+', label: 'States & Regions' },
+      { num: yearsTogether + '+', label: 'Years Together' },
     ];
 
     const box = document.getElementById('stats');
     data.forEach(d => {
       const el = document.createElement('div');
       el.className = 'stat';
-      el.innerHTML =
-        '<div class="emoji">' + d.emoji + '</div>' +
-        '<div class="num">' + d.num + '</div>' +
-        '<div class="label">' + d.label + '</div>';
+      el.innerHTML = '<div class="num">' + d.num + '</div><div class="label">' + d.label + '</div>';
       box.appendChild(el);
     });
+
+    const fc = document.getElementById('footer-count');
+    if (fc) fc.textContent = places.length;
   })();
 
   /* ---------- Map legend ---------- */
@@ -58,7 +43,7 @@
       const c = categories[key];
       const el = document.createElement('div');
       el.className = 'legend-item';
-      el.innerHTML = '<span class="legend-dot" style="background:' + c.color + '"></span>' + c.label;
+      el.innerHTML = '<span class="legend-dot" style="background:' + c.color + ';color:' + c.color + '"></span>' + c.label;
       box.appendChild(el);
     });
   })();
@@ -83,21 +68,41 @@
   /* ---------- Map (built last & guarded so nothing else depends on it) ---------- */
   (function drawMap() {
     try {
+      // scrollWheelZoom starts OFF so scrolling the page doesn't hijack into the map.
       const map = L.map('map', { scrollWheelZoom: false });
 
-      // Soft, light-toned map tiles (CARTO "Positron") to match the pastel theme
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-        subdomains: 'abcd',
-        maxZoom: 19
-      }).addTo(map);
+      // Two tile sets so the map matches the light/dark theme.
+      const TILES = {
+        dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+      };
+      let tileLayer = null;
+      function setTiles(theme) {
+        if (tileLayer) map.removeLayer(tileLayer);
+        tileLayer = L.tileLayer(TILES[theme === 'light' ? 'light' : 'dark'], {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          subdomains: 'abcd',
+          maxZoom: 19
+        }).addTo(map);
+      }
+      const startTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTiles(startTheme);
+      // theme.js calls this when the toggle is clicked
+      window.onThemeChange = setTiles;
+
+      // Enable wheel-zoom only while the user is interacting with the map,
+      // so it never fights with normal page scrolling (and the page won't zoom).
+      map.on('focus', () => map.scrollWheelZoom.enable());
+      map.on('blur', () => map.scrollWheelZoom.disable());
+      map.on('click', () => map.scrollWheelZoom.enable());
+      map.getContainer().addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
 
       // The dotted "journey trail" connecting places in chronological order
       const trail = places.map(p => p.coords);
       L.polyline(trail, {
-        color: '#e5679b',
+        color: '#2dd4bf',
         weight: 2.5,
-        opacity: 0.75,
+        opacity: 0.8,
         dashArray: '2, 10',
         lineCap: 'round'
       }).addTo(map);
@@ -105,20 +110,21 @@
       // A pin for each place
       const bounds = [];
       places.forEach(p => {
-        const cat = categories[p.category] || { color: '#e5679b' };
+        const cat = categories[p.category] || { color: '#2dd4bf' };
         const icon = L.divIcon({
           className: '',
           html: '<div class="pin" style="background:' + cat.color + '"><span>' + p.emoji + '</span></div>',
-          iconSize: [38, 38],
-          iconAnchor: [19, 38],
-          popupAnchor: [0, -36]
+          iconSize: [34, 34],
+          iconAnchor: [17, 34],
+          popupAnchor: [0, -32]
         });
 
         const marker = L.marker(p.coords, { icon: icon }).addTo(map);
+        const coords = p.coords[0].toFixed(3) + ', ' + p.coords[1].toFixed(3);
         marker.bindPopup(
           '<p class="popup-title">' + p.name + '</p>' +
-          '<p class="popup-date">' + p.date + '</p>' +
-          '<a class="popup-link" href="place.html?id=' + p.id + '">Open our memories →</a>'
+          '<p class="popup-meta">' + p.date + ' · ' + coords + '</p>' +
+          '<a class="popup-link" href="place.html?id=' + p.id + '">open log →</a>'
         );
         bounds.push(p.coords);
       });
@@ -131,8 +137,8 @@
         el.style.alignItems = 'center';
         el.style.justifyContent = 'center';
         el.style.textAlign = 'center';
-        el.innerHTML = '<div style="padding:2rem;color:#8a7680;font-family:Playfair Display,serif">' +
-          'The map needs an internet connection to load. 🌍<br>Our journey is still listed below. 💗</div>';
+        el.innerHTML = '<div style="padding:2rem;color:var(--muted);font-family:var(--mono)">' +
+          'The map needs an internet connection to load. 🌍<br>The full journey is listed below. ↓</div>';
       }
       console.error('Map failed to load:', err);
     }

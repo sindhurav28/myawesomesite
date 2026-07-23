@@ -1,26 +1,11 @@
 /* =============================================================================
-   OUR JOURNEY — PLACE DETAIL PAGE SCRIPT
-   Reads ?id=... from the address bar and shows that place's memories + photos.
+   K&S TRAVEL JOURNAL — PLACE DETAIL PAGE SCRIPT
+   Reads ?id=... from the address bar and shows that place's log + photos.
    You normally don't need to edit this file — edit js/data.js instead.
    ========================================================================== */
 
 (function () {
   const places = window.PLACES;
-
-  /* Floating hearts */
-  (function hearts() {
-    const wrap = document.getElementById('hearts');
-    const symbols = ['💖', '💕', '💗', '🤍', '✨', '💞'];
-    for (let i = 0; i < 12; i++) {
-      const s = document.createElement('span');
-      s.textContent = symbols[i % symbols.length];
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (0.9 + Math.random() * 1.4) + 'rem';
-      s.style.animationDuration = (12 + Math.random() * 16) + 's';
-      s.style.animationDelay = (Math.random() * 16) + 's';
-      wrap.appendChild(s);
-    }
-  })();
 
   /* Which place are we showing? */
   const params = new URLSearchParams(window.location.search);
@@ -30,19 +15,22 @@
 
   if (!place) {
     document.getElementById('place-hero').innerHTML =
-      '<h1>Hmm…</h1><p class="place-sub">We couldn\'t find that place. ' +
-      '<a class="back-link" href="index.html">← Back to our map</a></p>';
+      '<h1>404</h1><p class="place-sub">We couldn\'t find that place. ' +
+      '<a class="back-link" href="index.html">← back to the map</a></p>';
     return;
   }
 
-  document.title = place.name + ' — Our Memories';
+  document.title = place.name + ' — K&S Travel Journal';
+
+  const coords = place.coords[0].toFixed(4) + '°, ' + place.coords[1].toFixed(4) + '°';
 
   /* Hero */
   document.getElementById('place-hero').innerHTML =
-    '<a class="back-link" href="index.html">← Back to our map</a>' +
+    '<a class="back-link" href="index.html">← back to the map</a>' +
     '<div class="place-emoji">' + place.emoji + '</div>' +
     '<h1>' + place.name + '</h1>' +
-    '<div class="place-date">' + place.date + '</div>' +
+    '<div class="place-meta">' + place.date +
+      ' <span class="place-coords">· ' + coords + '</span></div>' +
     '<div class="place-sub">' + place.subtitle + '</div>';
 
   /* Body: memory card + gallery + prev/next */
@@ -72,8 +60,8 @@
       const ph = document.createElement('div');
       ph.className = 'photo-placeholder';
       ph.innerHTML = '<div class="big">📷</div>' +
-        'Add photos to<br><b>photos/' + place.id + '/</b><br>' +
-        '<span style="font-size:0.8rem">then list the file names in js/data.js</span>';
+        'drop photos in<br><b>photos/' + place.id + '/</b><br>' +
+        'then list the file names in js/data.js';
       gallery.appendChild(ph);
     }
   }
@@ -86,11 +74,11 @@
   nav.className = 'place-nav';
   nav.innerHTML =
     (prev
-      ? '<a href="place.html?id=' + prev.id + '"><div class="nav-label">← Previous stop</div>' +
+      ? '<a href="place.html?id=' + prev.id + '"><div class="nav-label">← previous stop</div>' +
         '<div class="nav-name">' + prev.emoji + ' ' + prev.name + '</div></a>'
       : '<a class="empty">.</a>') +
     (next
-      ? '<a class="next" href="place.html?id=' + next.id + '"><div class="nav-label">Next stop →</div>' +
+      ? '<a class="next" href="place.html?id=' + next.id + '"><div class="nav-label">next stop →</div>' +
         '<div class="nav-name">' + next.name + ' ' + next.emoji + '</div></a>'
       : '<a class="empty">.</a>');
   body.appendChild(nav);

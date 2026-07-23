@@ -464,10 +464,10 @@ const PLACES = [
    Colors & labels for each category of pin (you can tweak the colors if you like)
    -------------------------------------------------------------------------- */
 const CATEGORIES = {
-  milestone: { color: "#e5679b", label: "Milestone" },
-  nature:    { color: "#5aa469", label: "Nature & Parks" },
-  city:      { color: "#6a8ec9", label: "City Trips" },
-  beach:     { color: "#e6a15a", label: "Beaches & Sun" }
+  milestone: { color: "#fbbf24", label: "Milestones" },
+  nature:    { color: "#34d399", label: "Nature & Parks" },
+  city:      { color: "#38bdf8", label: "City Trips" },
+  beach:     { color: "#a78bfa", label: "Beaches & Coast" }
 };
 
 /* Make the data available to the other scripts */

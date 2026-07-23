@@ -3,77 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday, My Love — Our Journey</title>
-  <meta name="description" content="A map of everywhere we've been, and everywhere we're going next." />
+  <title>K&S Travel Journal</title>
+  <meta name="description" content="K&S Travel Journal — a map of everywhere we've been, and everywhere we're going next." />
+
+  <!-- set theme before paint to avoid a flash -->
+  <script>(function(){try{var t=localStorage.getItem('kns-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 
   <!-- Leaflet map library (bundled locally — no external dependency) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
 </head>
 <body>
-  <!-- floating hearts (added by JS) -->
-  <div class="hearts" id="hearts" aria-hidden="true"></div>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">☀ light mode</button>
 
   <!-- ================= HERO ================= -->
   <header class="hero">
-    <div class="eyebrow">Happy Birthday</div>
-    <h1>Happy Birthday,<br />My Love</h1>
-    <p class="subtitle">Every place on this map is a page in our story.</p>
+    <div class="eyebrow">// K &amp; S · travel log <span class="blink">▋</span></div>
+    <h1>K&amp;S Travel Journal</h1>
+    <p class="subtitle">just like you wanted.. :P</p>
   </header>
 
   <!-- ================= BIRTHDAY MESSAGE ================= -->
-  <!-- ✏️ EDIT ME: change this message to your own words, and add his name below. -->
+  <!-- ✏️ EDIT ME: change this message to your own words. -->
   <section class="message-card">
-    <h2>To the love of my life</h2>
-    <p>
-      Happy birthday to the person who turned my ordinary days into an adventure.
-      From the very first time we met, I knew my favorite place in the world would
-      always be wherever you are.
-    </p>
-    <p>
-      We've crossed oceans and mountains, chased waterfalls and city lights, and
-      collected sunsets in more places than I can count. But my favorite part was
-      never the destination — it was getting to hold your hand through every single
-      one of them.
-    </p>
-    <p>
-      So here's a little map of everywhere we've been together, and a promise of all
-      the pins we've yet to drop. Thank you for being my home, my adventure, and my
-      forever. I love you more than all the miles between these dots. 💗
-    </p>
-    <p class="signature">— Always yours ♥</p>
+    <div class="card-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="path">~/k-and-s/birthday_wish.md</span>
+    </div>
+    <div class="message-body">
+      <h2>Happy <span class="accent">35th</span> Birthday 🎂</h2>
+      <p>
+        As you turn 35, I wish you explore yourself more in every new place and
+        reach great heights of success and make all your dreams come true. And
+        make sure you dream enough. 🚀
+      </p>
+      <p class="signature">// with all my love for you, and your love for tech 💻</p>
+    </div>
   </section>
 
   <!-- ================= HIGHLIGHTS / FUN FACTS ================= -->
   <section class="section">
+    <div class="section-index">01</div>
     <h2 class="section-title">By the Numbers</h2>
-    <p class="section-subtitle">A few fun facts about our adventures so far</p>
+    <p class="section-subtitle">our adventures, quantified</p>
     <div class="stats" id="stats"><!-- filled by JavaScript --></div>
   </section>
 
   <!-- ================= MAP ================= -->
   <section class="section">
+    <div class="section-index">02</div>
     <h2 class="section-title">Our Journey, Mapped</h2>
-    <p class="section-subtitle">Follow the dotted trail — and tap any pin to open our memories 💕</p>
+    <p class="section-subtitle">follow the trail — tap any pin to open the log</p>
     <div id="map"></div>
+    <p class="map-hint">tip: click the map to zoom with your scroll wheel · use +/− to zoom the map (not the page)</p>
     <div class="map-legend" id="legend"><!-- filled by JavaScript --></div>
   </section>
 
   <!-- ================= TIMELINE ================= -->
   <section class="section">
+    <div class="section-index">03</div>
     <h2 class="section-title">Our Story, In Order</h2>
-    <p class="section-subtitle">Every stop along the way, from the day we met</p>
+    <p class="section-subtitle">every stop, chronologically</p>
     <div class="timeline" id="timeline"><!-- filled by JavaScript --></div>
   </section>
 
   <footer class="site-footer">
-    Made with <span class="heart">♥</span> for the best adventure partner in the world.
+    built with ♥ &amp; a little JavaScript — <span id="footer-count"></span> stops and counting
   </footer>
 
   <!-- Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
