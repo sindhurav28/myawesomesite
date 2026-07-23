@@ -78,7 +78,17 @@
     });
   }
 
-  window.KNS = { toast: toast, reveal: reveal, rescan: wire, foundCount: () => found.size, eggTotal: TOTAL };
+  // count an egg (update HUD) without showing the built-in toast — the world
+  // shows its own image-reveal panel instead.
+  function collect(id) {
+    markFound(id);
+    if (found.has(id)) return false;
+    found.add(id); persist(); renderHud();
+    if (found.size >= TOTAL) setTimeout(() => toast('🏆 Acquisition complete', 'All secrets found. Hooli tried to buy them. We said no. 🥧'), 1000);
+    return true;
+  }
+
+  window.KNS = { toast: toast, reveal: reveal, collect: collect, rescan: wire, foundCount: () => found.size, eggTotal: TOTAL };
   document.addEventListener('DOMContentLoaded', wire);
   wire();
 })();

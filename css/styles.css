@@ -975,3 +975,13 @@ body.app .valley { height: 100vh; }
 }
 .pd-navb:hover { border-color: var(--accent); color: var(--accent); }
 .pd-navb.next { margin-left: auto; }
+
+/* egg reveal panel */
+.egg-reveal { text-align: center; }
+.egg-reveal .panel-h { text-align: center; }
+.egg-img { max-width: 100%; max-height: 46vh; border-radius: 14px; border: 2px solid var(--ink-border); box-shadow: var(--shadow); }
+.egg-fb { flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; padding: 1.5rem; }
+.egg-fb-emoji { font-size: 5rem; }
+.egg-fb-note { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+.egg-fb-note b { color: var(--accent); }
+.egg-quote { font-family: var(--body); font-size: 1.05rem; margin-top: 1rem; color: var(--text); }
