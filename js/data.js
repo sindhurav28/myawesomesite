@@ -457,6 +457,112 @@ const PLACES = [
     nationalParks: 0,
     memory: "Holiday lights and big-city magic to close out the year. Add your memories here.",
     photos: []
+  },
+  {
+    id: "point-reyes-2026",
+    name: "Point Reyes",
+    subtitle: "Windswept cliffs & sea lions",
+    date: "January 2026",
+    sort: "2026-01-15",
+    coords: [38.0723, -122.8869],
+    country: "USA",
+    region: "California",
+    category: "nature",
+    emoji: "🦭",
+    nationalParks: 0,
+    memory: "Foggy coastal bluffs and crashing waves at Point Reyes National Seashore. Add your memories here.",
+    photos: []
+  },
+  {
+    id: "pier-39-2026",
+    name: "Pier 39, San Francisco",
+    subtitle: "Sea lions, sourdough & the bay",
+    date: "Spring 2026",
+    sort: "2026-04-10",
+    guessDate: true,
+    coords: [37.8087, -122.4098],
+    country: "USA",
+    region: "California",
+    category: "city",
+    emoji: "⚓",
+    nationalParks: 0,
+    memory: "The barking sea lions and bustling boardwalk of Pier 39. (I guessed the exact date — feel free to change it!) Add your memories here.",
+    photos: []
+  },
+  {
+    id: "chicago-2026",
+    name: "Chicago",
+    subtitle: "Back in the Windy City",
+    date: "May 2026",
+    sort: "2026-05-25",
+    coords: [41.9281, -87.6298],
+    country: "USA",
+    region: "Illinois",
+    category: "city",
+    emoji: "🌆",
+    nationalParks: 0,
+    memory: "Another round of deep dish and lakefront views in Chicago. Add your memories here.",
+    photos: []
+  },
+  {
+    id: "lake-tahoe-2026",
+    name: "Lake Tahoe",
+    subtitle: "Alpine blue — with S's parents 💙",
+    date: "May 2026",
+    sort: "2026-05-28",
+    coords: [39.1468, -120.0324],
+    country: "USA",
+    region: "California / Nevada",
+    category: "nature",
+    emoji: "🏔️",
+    nationalParks: 0,
+    memory: "Back at the bluest lake, this time sharing it with S's parents. Add your memories here.",
+    photos: []
+  },
+  {
+    id: "las-vegas-2026",
+    name: "Las Vegas",
+    subtitle: "Neon nights with the family",
+    date: "May 2026",
+    sort: "2026-05-30",
+    coords: [36.2199, -115.1398],
+    country: "USA",
+    region: "Nevada",
+    category: "city",
+    emoji: "🎰",
+    nationalParks: 0,
+    memory: "The bright lights of the Strip, this time with S's parents along for the fun. Add your memories here.",
+    photos: []
+  },
+  {
+    id: "death-valley-2026",
+    name: "Death Valley",
+    subtitle: "The desert, again — family edition",
+    date: "June 2026",
+    sort: "2026-06-01",
+    coords: [36.5554, -117.0794],
+    country: "USA",
+    region: "California",
+    category: "nature",
+    emoji: "🏜️",
+    nationalParks: 0,
+    memory: "Sharing the vast, otherworldly desert with S's parents. Add your memories here.",
+    photos: []
+  },
+  {
+    id: "carmel-2026",
+    name: "Carmel-by-the-Sea",
+    subtitle: "Storybook coast with the family",
+    date: "June 2026",
+    sort: "2026-06-03",
+    coords: [36.5852, -121.9233],
+    country: "USA",
+    region: "California",
+    category: "beach",
+    emoji: "🐚",
+    nationalParks: 0,
+    memory: "Returning to the fairytale coast of Carmel with S's parents. Add your memories here.",
+    photos: []
   }
 ];
 
@@ -469,6 +575,13 @@ const CATEGORIES = {
   city:      { color: "#38bdf8", label: "City Trips" },
   beach:     { color: "#a78bfa", label: "Beaches & Coast" }
 };
+
+/* The specific national parks we've set foot in (used by the stat pop-up) */
+const NATIONAL_PARKS = [
+  "Olympic 🌲", "Mount Rainier 🏔️", "North Cascades 🏞️",
+  "Death Valley 🏜️", "Crater Lake 🌊", "Zion 🧡"
+];
+window.NATIONAL_PARKS = NATIONAL_PARKS;
 
 /* Make the data available to the other scripts */
 window.PLACES = PLACES.slice().sort((a, b) => a.sort.localeCompare(b.sort));

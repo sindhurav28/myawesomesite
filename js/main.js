@@ -106,11 +106,22 @@
     const yearsTogether = new Date().getFullYear() - firstYear;
     const miles = Math.floor(window.totalJourneyMiles / 100) * 100;
 
+    // Lists shown in the pop-up when a stat is clicked
+    const countryCounts = {}, regionCounts = {};
+    places.forEach(p => {
+      countryCounts[p.country] = (countryCounts[p.country] || 0) + 1;
+      regionCounts[p.region] = (regionCounts[p.region] || 0) + 1;
+    });
+    const destList = places.map(p => ({ name: p.emoji + ' ' + p.name, meta: p.date }));
+    const countryList = Object.keys(countryCounts).sort().map(c => ({ name: c, meta: countryCounts[c] + ' stops' }));
+    const regionList = Object.keys(regionCounts).sort().map(r => ({ name: r, meta: regionCounts[r] + '' }));
+    const parkList = (window.NATIONAL_PARKS || []).map(n => ({ name: n, meta: '' }));
+
     const data = [
-      { num: places.length, label: 'Destinations' },
-      { num: countries.size, label: 'Countries' },
-      { num: parks, suffix: '+', label: 'National Parks' },
-      { num: regions.size, suffix: '+', label: 'States & Regions' },
+      { num: places.length, label: 'Destinations', title: 'All ' + places.length + ' Destinations', list: destList },
+      { num: countries.size, label: 'Countries', title: 'Countries Visited', list: countryList },
+      { num: parks, suffix: '+', label: 'National Parks', title: 'National Parks Explored', list: parkList },
+      { num: regions.size, suffix: '+', label: 'States & Regions', title: 'States & Regions', list: regionList },
       { num: yearsTogether, suffix: '+', label: 'Years Together' },
       { num: miles, suffix: '+', label: 'Miles Traveled', format: withCommas },
     ];
@@ -118,7 +129,7 @@
     const box = document.getElementById('stats');
     data.forEach(d => {
       const el = document.createElement('div');
-      el.className = 'stat';
+      el.className = 'stat' + (d.list ? ' clickable' : '');
       const numEl = document.createElement('div');
       numEl.className = 'num';
       numEl.textContent = '0' + (d.suffix || '');
@@ -127,6 +138,12 @@
       labelEl.textContent = d.label;
       el.appendChild(numEl);
       el.appendChild(labelEl);
+      if (d.list) {
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('click', () => showList(d.title, d.list));
+        el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showList(d.title, d.list); } });
+      }
       box.appendChild(el);
       statTargets.push({ el: numEl, target: d.num, suffix: d.suffix, format: d.format });
     });
@@ -297,6 +314,36 @@
       console.error('Map failed to load:', err);
     }
   })();
+
+  /* ============================ STAT LIST POP-UP ========================= */
+  let listpopEl = null;
+  function showList(title, items) {
+    if (!listpopEl) {
+      listpopEl = document.createElement('div');
+      listpopEl.className = 'listpop';
+      listpopEl.innerHTML = '<div class="listpop-card"><h3></h3><ul></ul>' +
+        '<button class="listpop-close" type="button">close</button></div>';
+      document.body.appendChild(listpopEl);
+      listpopEl.addEventListener('click', e => { if (e.target === listpopEl) hideList(); });
+      listpopEl.querySelector('.listpop-close').addEventListener('click', hideList);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') hideList(); });
+    }
+    listpopEl.querySelector('h3').textContent = title;
+    const ul = listpopEl.querySelector('ul');
+    ul.innerHTML = '';
+    items.forEach(it => {
+      const li = document.createElement('li');
+      li.appendChild(document.createTextNode(it.name));
+      if (it.meta) {
+        const m = document.createElement('span');
+        m.textContent = it.meta;
+        li.appendChild(m);
+      }
+      ul.appendChild(li);
+    });
+    listpopEl.classList.add('open');
+  }
+  function hideList() { if (listpopEl) listpopEl.classList.remove('open'); }
 
   /* ============================ UTIL ===================================== */
   function observeOnce(target, cb) {
