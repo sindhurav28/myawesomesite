@@ -24,6 +24,25 @@
 
   const coords = place.coords[0].toFixed(4) + '°, ' + place.coords[1].toFixed(4) + '°';
 
+  /* Techy metadata */
+  const stopNo = index + 1;
+  // Rough UTC offset from longitude (solar time) — labelled "approx"
+  const utc = Math.round(place.coords[1] / 15);
+  const utcStr = 'UTC' + (utc >= 0 ? '+' + utc : utc);
+  const prevStop = places[index - 1];
+  const legMiles = prevStop ? Math.round(window.haversineMiles(prevStop.coords, place.coords)) : 0;
+  const catLabel = (window.CATEGORIES[place.category] || {}).label || place.category;
+
+  const badges =
+    '<div class="badges">' +
+      '<span class="badge">stop <b>#' + stopNo + '</b> / ' + places.length + '</span>' +
+      '<span class="badge">lat <b>' + place.coords[0].toFixed(4) + '</b> · lng <b>' + place.coords[1].toFixed(4) + '</b></span>' +
+      '<span class="badge">' + place.region + '</span>' +
+      '<span class="badge">' + catLabel + '</span>' +
+      '<span class="badge">tz <b>' + utcStr + '</b> <span style="opacity:.6">(approx)</span></span>' +
+      (prevStop ? '<span class="badge"><b>' + legMiles.toLocaleString() + '</b> mi from prev stop</span>' : '<span class="badge"><b>the beginning</b> ✦</span>') +
+    '</div>';
+
   /* Hero */
   document.getElementById('place-hero').innerHTML =
     '<a class="back-link" href="index.html">← back to the map</a>' +
@@ -31,7 +50,8 @@
     '<h1>' + place.name + '</h1>' +
     '<div class="place-meta">' + place.date +
       ' <span class="place-coords">· ' + coords + '</span></div>' +
-    '<div class="place-sub">' + place.subtitle + '</div>';
+    '<div class="place-sub">' + place.subtitle + '</div>' +
+    badges;
 
   /* Body: memory card + gallery + prev/next */
   const body = document.getElementById('place-body');

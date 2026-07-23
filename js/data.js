@@ -473,3 +473,26 @@ const CATEGORIES = {
 /* Make the data available to the other scripts */
 window.PLACES = PLACES.slice().sort((a, b) => a.sort.localeCompare(b.sort));
 window.CATEGORIES = CATEGORIES;
+
+/* ---------- Distance helpers (great-circle "as the crow flies") ---------- */
+function haversineMiles(a, b) {
+  const R = 3958.8; // Earth radius in miles
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(b[0] - a[0]);
+  const dLng = toRad(b[1] - a[1]);
+  const lat1 = toRad(a[0]);
+  const lat2 = toRad(b[0]);
+  const h = Math.sin(dLat / 2) ** 2 +
+            Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+window.haversineMiles = haversineMiles;
+
+// Total miles along the whole chronological journey
+window.totalJourneyMiles = (function () {
+  let sum = 0;
+  for (let i = 1; i < window.PLACES.length; i++) {
+    sum += haversineMiles(window.PLACES[i - 1].coords, window.PLACES[i].coords);
+  }
+  return sum;
+})();
