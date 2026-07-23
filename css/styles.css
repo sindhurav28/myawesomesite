@@ -855,3 +855,60 @@ a { color: var(--accent); }
 
 /* Keep the map from feeling flat-shadowed too harshly */
 #map { border-width: 2px; }
+
+/* =============================== K&S VALLEY (explorable world) =============================== */
+.valley {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 560px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 78%);
+  border-bottom: 3px solid var(--ink-border);
+  cursor: grab;
+}
+.valley.grabbing { cursor: grabbing; }
+#world { width: 100%; height: 100%; display: block; touch-action: none; user-select: none; }
+#world text { pointer-events: none; }
+#world .wobj { cursor: pointer; }
+#world .wobj:hover { filter: brightness(1.08) drop-shadow(0 3px 6px rgba(0,0,0,0.25)); }
+
+.valley-title { position: absolute; top: 1.3rem; left: 1.5rem; z-index: 5; pointer-events: none; }
+.valley-title h1 {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(1.7rem, 4.5vw, 3rem); color: var(--text); margin: 0;
+  text-shadow: 0 2px 0 rgba(255,255,255,0.5), 0 6px 18px rgba(0,0,0,0.12);
+}
+.valley-title p { font-family: var(--mono); font-size: 0.78rem; color: var(--text); opacity: 0.8; margin: 0.3rem 0 0; }
+
+.valley-controls { position: absolute; right: 1.2rem; top: 40%; z-index: 5; display: flex; flex-direction: column; gap: 0.5rem; }
+.valley-controls button {
+  width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--ink-border);
+  background: var(--surface); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  box-shadow: var(--shadow); font-family: var(--display); font-weight: 700;
+  transition: transform 0.12s ease;
+}
+.valley-controls button:hover { transform: translateY(-2px); }
+
+.valley-scroll {
+  position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 5;
+  text-decoration: none; font-family: var(--mono); font-size: 0.85rem; color: var(--text);
+  background: var(--surface); border: 2px solid var(--ink-border); border-radius: 999px;
+  padding: 0.55rem 1.1rem; box-shadow: var(--shadow); animation: bob 1.9s ease-in-out infinite;
+}
+@keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 7px); } }
+
+/* world hover tooltip */
+.wtip {
+  position: fixed; z-index: 6; pointer-events: none;
+  background: var(--surface-solid); border: 1px solid var(--ink-border); border-radius: 8px;
+  padding: 0.3rem 0.6rem; font-family: var(--mono); font-size: 0.74rem; color: var(--text);
+  box-shadow: var(--shadow); transform: translate(-50%, -150%); white-space: nowrap;
+  opacity: 0; transition: opacity 0.12s ease;
+}
+.wtip.show { opacity: 1; }
+
+@media (max-width: 600px) {
+  .valley-title h1 { font-size: 1.6rem; }
+  .valley-controls { top: auto; bottom: 5.5rem; }
+}

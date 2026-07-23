@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>K&S — a Pied Piper company</title>
+  <title>K&S Valley — a Pied Piper company</title>
   <meta name="description" content="K&S: making the world a better place, one destination at a time." />
 
   <!-- set theme before paint to avoid a flash -->
@@ -11,27 +11,30 @@
 
   <!-- Leaflet map library (bundled locally — no external dependency) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css?v=6" />
+  <link rel="stylesheet" href="css/styles.css?v=7" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥧</text></svg>" />
 </head>
 <body>
   <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">☀ light mode</button>
 
-  <!-- ================= HERO ================= -->
-  <header class="hero">
-    <div class="pp-logo">
-      <span class="pp-mark egg" data-egg="piper" title="K&amp;S">🥧</span>
-      <span class="pp-badge">SEED: 2022 · SERIES ∞</span>
+  <!-- ======================= K&S VALLEY (explorable world) ======================= -->
+  <section class="valley" id="valley">
+    <svg id="world" aria-label="K&amp;S Valley — drag to explore"></svg>
+    <div class="valley-title">
+      <h1>K&amp;S Valley 🥧</h1>
+      <p>drag to explore · click a building · find the secrets</p>
     </div>
-    <h1 id="hero-title" data-text="K&amp;S Travel Journal">K&amp;S Travel Journal</h1>
-    <p class="subtitle">Making the world a better place, one destination at a time.™</p>
-    <p class="subtitle" style="font-size:0.9rem;opacity:0.75">// just like you wanted.. :P</p>
-    <div class="skyline"><svg id="skyline" aria-hidden="true"></svg></div>
-  </header>
+    <div class="valley-controls">
+      <button id="vz-in" type="button" aria-label="Zoom in">+</button>
+      <button id="vz-out" type="button" aria-label="Zoom out">−</button>
+      <button id="vz-reset" type="button" aria-label="Reset view">⤾</button>
+    </div>
+    <a class="valley-scroll" href="#dossier">↓ open the dossier</a>
+  </section>
 
   <!-- ================= LAUNCH ANNOUNCEMENT (birthday message) ================= -->
   <!-- ✏️ EDIT ME: change this message to your own words. -->
-  <section class="message-card">
+  <section class="message-card" id="dossier">
     <div class="card-bar">
       <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       <span class="path">~/k-and-s/LAUNCH_v35.md</span>
@@ -72,7 +75,7 @@
   </section>
 
   <!-- ================= EXPANSION ROADMAP (map) ================= -->
-  <section class="section">
+  <section class="section" id="roadmap">
     <div class="section-index">02</div>
     <h2 class="section-title">Expansion Roadmap 🗺️</h2>
     <p class="section-subtitle">our go-to-market — tap any pin to open the case study</p>
@@ -105,10 +108,10 @@
 
   <!-- Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="js/data.js?v=6"></script>
-  <script src="js/theme.js?v=6"></script>
-  <script src="js/skyline.js?v=6"></script>
-  <script src="js/main.js?v=6"></script>
-  <script src="js/easter.js?v=6"></script>
+  <script src="js/data.js?v=7"></script>
+  <script src="js/theme.js?v=7"></script>
+  <script src="js/easter.js?v=7"></script>
+  <script src="js/main.js?v=7"></script>
+  <script src="js/world.js?v=7"></script>
 </body>
 </html>
