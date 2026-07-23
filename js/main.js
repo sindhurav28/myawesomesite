@@ -24,12 +24,13 @@
     const inner = overlay.querySelector('.boot-inner');
 
     const lines = [
-      '> initializing <span class="accent">k&s-travel-journal</span> v2.0',
-      '> mounting <span class="accent">memories.json</span> ............. <span class="ok">ok</span>',
-      '> loading <span class="accent">' + places.length + '</span> destinations ........... <span class="ok">ok</span>',
-      '> plotting journey trail ................ <span class="ok">ok</span>',
-      '> calibrating <span class="accent">love.protocol</span> .......... <span class="ok">ok</span>',
-      '> launch <span class="ok">✓</span>'
+      '> booting <span class="accent">Pied Piper</span> platform ...........',
+      '> initializing middle-out compression ... <span class="ok">ok</span>',
+      '> Weissman score: <span class="accent">5.2</span> (optimal) ......... <span class="ok">ok</span>',
+      '> mounting <span class="accent">relationship.db</span> (' + places.length + ' memories) <span class="ok">ok</span>',
+      '> SmartPipe™ syncing .................... <span class="ok">ok</span>',
+      '> "this could be worth <span class="accent">billions</span>" — Russ <span class="ok">✓</span>',
+      '> launch <span class="ok">🥧</span>'
     ];
 
     let i = 0, timer = null, finished = false;
@@ -118,12 +119,12 @@
     const parkList = (window.NATIONAL_PARKS || []).map(n => ({ name: n, meta: '' }));
 
     const data = [
-      { num: places.length, label: 'Destinations', title: 'All ' + places.length + ' Destinations', list: destList },
-      { num: countries.size, label: 'Countries', title: 'Countries Visited', list: countryList },
-      { num: parks, suffix: '+', label: 'National Parks', title: 'National Parks Explored', list: parkList },
-      { num: regions.size, suffix: '+', label: 'States & Regions', title: 'States & Regions', list: regionList },
-      { num: yearsTogether, suffix: '+', label: 'Years Together' },
-      { num: miles, suffix: '+', label: 'Miles Traveled', format: withCommas },
+      { num: places.length, label: 'Markets Entered', title: 'All ' + places.length + ' Destinations', list: destList },
+      { num: countries.size, label: 'Global Reach', title: 'Countries Visited', list: countryList },
+      { num: parks, suffix: '+', label: 'Parks Shipped', title: 'National Parks Explored', list: parkList },
+      { num: regions.size, suffix: '+', label: 'Regions Scaled', title: 'States & Regions', list: regionList },
+      { num: yearsTogether, suffix: '+', label: 'Runway (yrs)' },
+      { num: miles, suffix: '+', label: 'Distance Scaled (mi)', format: withCommas },
     ];
 
     const box = document.getElementById('stats');
@@ -252,7 +253,7 @@
         marker.bindPopup(
           '<p class="popup-title">' + p.name + '</p>' +
           '<p class="popup-meta">' + p.date + ' · ' + coords + '</p>' +
-          '<a class="popup-link" href="place.html?id=' + p.id + '">open log →</a>'
+          '<a class="popup-link" href="place.html?id=' + p.id + '">open case study →</a>'
         );
         (groups[p.category] || groups[Object.keys(groups)[0]]).addLayer(marker);
         bounds.push(p.coords);
@@ -280,7 +281,7 @@
       // ---- Animated self-drawing trail + traveling pulse ----
       const pts = places.map(p => p.coords);
       const trail = L.polyline([pts[0]], {
-        color: '#2dd4bf', weight: 2.5, opacity: 0.85, dashArray: '2, 10', lineCap: 'round'
+        color: '#3ecf8e', weight: 2.5, opacity: 0.9, dashArray: '2, 10', lineCap: 'round'
       }).addTo(map);
 
       const pulseIcon = L.divIcon({ className: '', html: '<div class="pulse-dot"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });

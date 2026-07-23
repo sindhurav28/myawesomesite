@@ -3,88 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>K&S Travel Journal</title>
-  <meta name="description" content="K&S Travel Journal — a map of everywhere we've been, and everywhere we're going next." />
+  <title>K&S — a Pied Piper company</title>
+  <meta name="description" content="K&S: making the world a better place, one destination at a time." />
 
   <!-- set theme before paint to avoid a flash -->
   <script>(function(){try{var t=localStorage.getItem('kns-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 
   <!-- Leaflet map library (bundled locally — no external dependency) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css?v=4" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css?v=5" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥧</text></svg>" />
 </head>
 <body>
   <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">☀ light mode</button>
 
   <!-- ================= HERO ================= -->
   <header class="hero">
-    <div class="eyebrow">// K &amp; S · travel log <span class="blink">▋</span></div>
+    <div class="pp-logo">
+      <span class="pp-mark egg" data-egg="piper" title="K&amp;S">🥧</span>
+      <span class="pp-badge">SEED: 2022 · SERIES ∞</span>
+    </div>
     <h1 id="hero-title" data-text="K&amp;S Travel Journal">K&amp;S Travel Journal</h1>
-    <p class="subtitle">just like you wanted.. :P</p>
+    <p class="subtitle">Making the world a better place, one destination at a time.™</p>
+    <p class="subtitle" style="font-size:0.9rem;opacity:0.75">// just like you wanted.. :P</p>
   </header>
 
-  <!-- ================= BIRTHDAY MESSAGE ================= -->
+  <!-- ================= LAUNCH ANNOUNCEMENT (birthday message) ================= -->
   <!-- ✏️ EDIT ME: change this message to your own words. -->
   <section class="message-card">
     <div class="card-bar">
       <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-      <span class="path">~/k-and-s/birthday_wish.md</span>
+      <span class="path">~/k-and-s/LAUNCH_v35.md</span>
     </div>
     <div class="message-body">
-      <h2>Happy <span class="accent">35th</span> Birthday 🎂</h2>
+      <h2>🥧 Announcing: <span class="accent">You, v35.0</span></h2>
       <p>
-        As you turn 35, I wish you explore yourself more in every new place and
-        reach great heights of success and make all your dreams come true. And
-        make sure you dream enough. 🚀
+        Today we're thrilled to announce the most important launch I've ever backed:
+        <b>you</b>, now shipping version 35. After an exhaustive market analysis, the
+        board (me) has concluded you are, in fact, the category-defining unicorn. 🦄
       </p>
-      <p class="signature">// with all my love for you, and your love for tech 💻</p>
+      <p>
+        In a space full of noise, you're the rare founder with equal parts brilliance
+        and absurd charm — and a heart big enough to disrupt entire industries. You
+        dream in bold, ambitious roadmaps, and somehow you make everyone around you
+        believe the impossible is just one more sprint away.
+      </p>
+      <p>
+        But my favorite feature? The way you make me feel — safe, seen, and endlessly
+        at home, no matter the timezone. No pivot, no funding round, no nine-figure exit
+        could ever be worth more than that. You really are making <i>my</i> world a
+        better place.
+      </p>
+      <p>
+        So happy 35th birthday to my favorite founder — the CEO of Us, Inc. Here's to
+        another year of big dreams, bigger adventures, and going full middle-out. 🚀
+      </p>
+      <p class="signature">// with all my love for you, and your love for tech 💻🥧</p>
     </div>
   </section>
 
-  <!-- ================= HIGHLIGHTS / FUN FACTS ================= -->
+  <!-- ================= TRACTION (stats) ================= -->
   <section class="section">
     <div class="section-index">01</div>
-    <h2 class="section-title">By the Numbers</h2>
-    <p class="section-subtitle">our adventures, quantified</p>
+    <h2 class="section-title">Traction 📈</h2>
+    <p class="section-subtitle">the metrics the board actually cares about · tap a card to drill down <span class="egg" data-egg="commas" title="hmm">💵</span></p>
     <div class="stats" id="stats"><!-- filled by JavaScript --></div>
   </section>
 
-  <!-- ================= MAP ================= -->
+  <!-- ================= EXPANSION ROADMAP (map) ================= -->
   <section class="section">
     <div class="section-index">02</div>
-    <h2 class="section-title">Our Journey, Mapped</h2>
-    <p class="section-subtitle">follow the trail — tap any pin to open the log</p>
+    <h2 class="section-title">Expansion Roadmap 🗺️</h2>
+    <p class="section-subtitle">our go-to-market — tap any pin to open the case study</p>
     <div class="filters" id="filters"><!-- filled by JavaScript --></div>
     <div id="map"></div>
-    <p class="map-hint">tip: click the map to zoom with your scroll wheel · use +/− to zoom the map (not the page)</p>
+    <p class="map-hint">tip: click the map to zoom with your scroll wheel · use +/− to zoom the map (not the page) <span class="egg" data-egg="anton" title="is that a server?">🖥️</span></p>
     <div class="map-legend" id="legend"><!-- filled by JavaScript --></div>
   </section>
 
-  <!-- ================= TRIPS PER YEAR ================= -->
+  <!-- ================= HOCKEY-STICK GROWTH (chart) ================= -->
   <section class="section">
     <div class="section-index">03</div>
-    <h2 class="section-title">Trips by Year</h2>
-    <p class="section-subtitle">destinations logged per year</p>
+    <h2 class="section-title">Hockey-Stick Growth 📈</h2>
+    <p class="section-subtitle">destinations shipped per fiscal year <span class="egg" data-egg="middleout" title="compress this">📦</span></p>
     <div class="chart" id="chart"><!-- filled by JavaScript --></div>
   </section>
 
-  <!-- ================= TIMELINE ================= -->
+  <!-- ================= CHANGELOG (timeline) ================= -->
   <section class="section">
     <div class="section-index">04</div>
-    <h2 class="section-title">Our Story, In Order</h2>
-    <p class="section-subtitle">every stop, chronologically</p>
+    <h2 class="section-title">Changelog 📝</h2>
+    <p class="section-subtitle">every release, chronologically</p>
     <div class="timeline" id="timeline"><!-- filled by JavaScript --></div>
   </section>
 
   <footer class="site-footer">
-    built with ♥ &amp; a little JavaScript — <span id="footer-count"></span> stops and counting
+    K&amp;S is a Bachmanity-incubated company · <span id="footer-count"></span> destinations shipped ·
+    no SmartFridges were harmed <span class="egg" data-egg="hotdog" title="hungry?">🌭</span>
   </footer>
 
   <!-- Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="js/data.js?v=4"></script>
-  <script src="js/theme.js?v=4"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="js/data.js?v=5"></script>
+  <script src="js/theme.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script src="js/easter.js?v=5"></script>
 </body>
 </html>

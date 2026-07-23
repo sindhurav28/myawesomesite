@@ -3,41 +3,41 @@
    A modern, techy "travel dashboard" theme with a dark/light toggle.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --display: 'Chakra Petch', system-ui, sans-serif;
+  --display: 'Plus Jakarta Sans', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
   --body: 'Inter', system-ui, sans-serif;
 
-  /* ---- Dark theme (default) ---- */
-  --bg: #0b1220;
-  --bg-2: #0e1626;
-  --grid: rgba(120, 160, 220, 0.05);
+  /* ---- Dark theme (default) — Pied Piper green ---- */
+  --bg: #0a1410;
+  --bg-2: #0e1a15;
+  --grid: rgba(120, 220, 160, 0.05);
   --surface: rgba(255, 255, 255, 0.035);
-  --surface-solid: #121b2e;
-  --border: rgba(140, 170, 220, 0.14);
-  --text: #e7eef8;
-  --muted: #93a3ba;
-  --accent: #2dd4bf;
-  --accent-2: #38bdf8;
-  --glow: rgba(45, 212, 191, 0.18);
-  --shadow: 0 14px 44px rgba(0, 0, 0, 0.45);
+  --surface-solid: #12211a;
+  --border: rgba(120, 200, 150, 0.16);
+  --text: #e8f3ec;
+  --muted: #8ba99a;
+  --accent: #3ecf8e;
+  --accent-2: #26d07c;
+  --glow: rgba(62, 207, 142, 0.20);
+  --shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="light"] {
-  --bg: #f5f8fc;
-  --bg-2: #eef3fa;
-  --grid: rgba(20, 40, 80, 0.045);
+  --bg: #f3faf5;
+  --bg-2: #e9f5ee;
+  --grid: rgba(20, 90, 55, 0.05);
   --surface: #ffffff;
   --surface-solid: #ffffff;
-  --border: rgba(20, 40, 80, 0.12);
-  --text: #0f1b2d;
-  --muted: #5b6b82;
-  --accent: #0d9488;
-  --accent-2: #0284c7;
-  --glow: rgba(13, 148, 136, 0.12);
-  --shadow: 0 14px 40px rgba(30, 60, 110, 0.12);
+  --border: rgba(20, 90, 55, 0.14);
+  --text: #0c1f16;
+  --muted: #52705f;
+  --accent: #12965a;
+  --accent-2: #0f8a4f;
+  --glow: rgba(18, 150, 90, 0.12);
+  --shadow: 0 14px 40px rgba(20, 90, 55, 0.12);
 }
 
 * { box-sizing: border-box; }
@@ -521,8 +521,8 @@ a { color: var(--accent); }
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: #05080f;
-  color: #7fe3d3;
+  background: #04100a;
+  color: #7fe3a8;
   font-family: var(--mono);
   font-size: clamp(0.75rem, 2.2vw, 0.95rem);
   padding: clamp(1.2rem, 6vw, 4rem);
@@ -533,11 +533,11 @@ a { color: var(--accent); }
 .boot.done { opacity: 0; pointer-events: none; }
 .boot .boot-inner { max-width: 760px; margin: 0 auto; }
 .boot .ok { color: #34d399; }
-.boot .accent { color: #38bdf8; }
+.boot .accent { color: #6ee7a8; }
 .boot .cursor {
   display: inline-block;
   width: 0.6em; height: 1.05em;
-  background: #7fe3d3;
+  background: #7fe3a8;
   vertical-align: -0.16em;
   animation: blink 1s steps(2, start) infinite;
 }
@@ -707,11 +707,104 @@ a { color: var(--accent); }
   width: 14px; height: 14px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 0 rgba(45, 212, 191, 0.7);
+  box-shadow: 0 0 0 rgba(62, 207, 142, 0.7);
   animation: pulse 1.4s infinite;
 }
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7); }
-  70% { box-shadow: 0 0 0 14px rgba(45, 212, 191, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.7); }
+  70% { box-shadow: 0 0 0 14px rgba(62, 207, 142, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(62, 207, 142, 0); }
+}
+
+/* =============================== SILICON VALLEY / EASTER EGGS =============================== */
+
+/* Pied Piper logo mark in the hero */
+.pp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.pp-logo .pp-mark {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 10px var(--glow));
+  cursor: pointer;
+  user-select: none;
+  opacity: 1;
+  transition: transform 0.2s ease;
+}
+.pp-logo .pp-mark:hover { transform: rotate(-8deg) scale(1.1); }
+.pp-badge {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+
+/* Egg-hunt HUD */
+.egg-hud {
+  position: fixed;
+  left: 1.1rem; bottom: 1.1rem;
+  z-index: 500;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  backdrop-filter: blur(8px);
+  max-width: 240px;
+  cursor: help;
+}
+.egg-hud b { color: var(--accent); }
+.egg-hud .egg-hint { display: block; margin-top: 0.25rem; opacity: 0.7; font-size: 0.7rem; }
+.egg-hud.complete { border-color: var(--accent); box-shadow: 0 0 16px var(--glow); }
+
+/* Hidden clickable egg tokens */
+.egg {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.5;
+}
+.egg:hover { transform: scale(1.35); opacity: 1; }
+.egg.found { opacity: 1; }
+
+/* Toast pop for easter eggs */
+.toast-wrap {
+  position: fixed;
+  bottom: 1.2rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  pointer-events: none;
+  width: min(92vw, 420px);
+}
+.toast {
+  background: var(--surface-solid);
+  border: 1px solid var(--accent);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 0.8rem 1rem;
+  font-family: var(--body);
+  font-size: 0.9rem;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast .toast-title { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); display: block; margin-bottom: 0.2rem; }
+
+/* Not-Hotdog result flash */
+.nothotdog {
+  font-family: var(--mono);
+  color: var(--accent);
 }
