@@ -217,17 +217,17 @@
 
       const TILES = {
         dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+        light: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
       };
       let tileLayer = null;
       function setTiles(theme) {
         if (tileLayer) map.removeLayer(tileLayer);
-        tileLayer = L.tileLayer(TILES[theme === 'light' ? 'light' : 'dark'], {
+        tileLayer = L.tileLayer(TILES[theme === 'dark' ? 'dark' : 'light'], {
           attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           subdomains: 'abcd', maxZoom: 19
         }).addTo(map);
       }
-      setTiles(document.documentElement.getAttribute('data-theme') || 'dark');
+      setTiles(document.documentElement.getAttribute('data-theme') || 'light');
       window.onThemeChange = setTiles;
 
       // wheel-zoom only while interacting with the map (never zooms the page)
@@ -280,8 +280,9 @@
 
       // ---- Animated self-drawing trail + traveling pulse ----
       const pts = places.map(p => p.coords);
+      const trailColor = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#1f8ffb').trim();
       const trail = L.polyline([pts[0]], {
-        color: '#3ecf8e', weight: 2.5, opacity: 0.9, dashArray: '2, 10', lineCap: 'round'
+        color: trailColor, weight: 3, opacity: 0.95, dashArray: '2, 9', lineCap: 'round'
       }).addTo(map);
 
       const pulseIcon = L.divIcon({ className: '', html: '<div class="pulse-dot"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });

@@ -3,41 +3,50 @@
    A modern, techy "travel dashboard" theme with a dark/light toggle.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --display: 'Poppins', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
   --body: 'Inter', system-ui, sans-serif;
 
-  /* ---- Dark theme (default) — Pied Piper green ---- */
-  --bg: #0a1410;
-  --bg-2: #0e1a15;
-  --grid: rgba(120, 220, 160, 0.05);
-  --surface: rgba(255, 255, 255, 0.035);
-  --surface-solid: #12211a;
-  --border: rgba(120, 200, 150, 0.16);
-  --text: #e8f3ec;
-  --muted: #8ba99a;
-  --accent: #3ecf8e;
-  --accent-2: #26d07c;
-  --glow: rgba(62, 207, 142, 0.20);
-  --shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
-}
+  /* Flat brand palette (the colorful tech-city blocks) */
+  --c1: #2d9cff; --c2: #35c46a; --c3: #ff5a5f; --c4: #ffc42b;
+  --c5: #ff8a3d; --c6: #a06bff; --c7: #17c7c0;
 
-:root[data-theme="light"] {
-  --bg: #f3faf5;
-  --bg-2: #e9f5ee;
-  --grid: rgba(20, 90, 55, 0.05);
+  /* ---- Day theme (default) — bright Silicon Valley sky ---- */
+  --bg: #63bdf0;
+  --bg-2: #e4f5ff;
   --surface: #ffffff;
   --surface-solid: #ffffff;
-  --border: rgba(20, 90, 55, 0.14);
-  --text: #0c1f16;
-  --muted: #52705f;
-  --accent: #12965a;
-  --accent-2: #0f8a4f;
-  --glow: rgba(18, 150, 90, 0.12);
-  --shadow: 0 14px 40px rgba(20, 90, 55, 0.12);
+  --border: rgba(18, 35, 59, 0.16);
+  --ink-border: rgba(18, 35, 59, 0.85);
+  --text: #14243a;
+  --muted: #5b7086;
+  --accent: #1f8ffb;
+  --accent-2: #35c46a;
+  --glow: rgba(31, 143, 251, 0.18);
+  --shadow: 7px 7px 0 rgba(18, 35, 59, 0.13);
+  --sky-top: #58bff0;
+  --sky-bottom: #d9f2ff;
+}
+
+:root[data-theme="dark"] {
+  /* Night city variant */
+  --bg: #081827;
+  --bg-2: #123a5c;
+  --surface: #12294a;
+  --surface-solid: #14305a;
+  --border: rgba(150, 190, 235, 0.18);
+  --ink-border: rgba(150, 190, 235, 0.4);
+  --text: #eaf3ff;
+  --muted: #9fb6d4;
+  --accent: #38b6ff;
+  --accent-2: #4ade80;
+  --glow: rgba(56, 182, 255, 0.28);
+  --shadow: 7px 7px 0 rgba(0, 0, 0, 0.4);
+  --sky-top: #071627;
+  --sky-bottom: #123a5c;
 }
 
 * { box-sizing: border-box; }
@@ -48,15 +57,10 @@ body {
   font-family: var(--body);
   color: var(--text);
   line-height: 1.65;
-  background-color: var(--bg);
-  background-image:
-    radial-gradient(1200px 600px at 50% -10%, var(--glow), transparent 70%),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: auto, 44px 44px, 44px 44px;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 62%, var(--bg-2) 100%);
   background-attachment: fixed;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 a { color: var(--accent); }
@@ -521,8 +525,8 @@ a { color: var(--accent); }
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: #04100a;
-  color: #7fe3a8;
+  background: linear-gradient(180deg, #eaf6ff, #ffffff);
+  color: #2b3d55;
   font-family: var(--mono);
   font-size: clamp(0.75rem, 2.2vw, 0.95rem);
   padding: clamp(1.2rem, 6vw, 4rem);
@@ -532,19 +536,19 @@ a { color: var(--accent); }
 }
 .boot.done { opacity: 0; pointer-events: none; }
 .boot .boot-inner { max-width: 760px; margin: 0 auto; }
-.boot .ok { color: #34d399; }
-.boot .accent { color: #6ee7a8; }
+.boot .ok { color: #1e9e57; font-weight: 600; }
+.boot .accent { color: #1f8ffb; }
 .boot .cursor {
   display: inline-block;
   width: 0.6em; height: 1.05em;
-  background: #7fe3a8;
+  background: #2b3d55;
   vertical-align: -0.16em;
   animation: blink 1s steps(2, start) infinite;
 }
 .boot .skip {
   position: absolute;
   bottom: 1.2rem; right: 1.4rem;
-  color: #4a5b6f;
+  color: #8aa0b5;
   font-size: 0.75rem;
 }
 
@@ -808,3 +812,46 @@ a { color: var(--accent); }
   font-family: var(--mono);
   color: var(--accent);
 }
+
+/* =============================== SV OPENING-CREDITS FLAT LOOK =============================== */
+
+/* Bolder flat outlines + colorful accents on the stat cards */
+.stat { border-width: 2px; }
+.stat.clickable::after { color: var(--muted); }
+.stat:nth-child(7n+1)::before { background: var(--c1); }
+.stat:nth-child(7n+2)::before { background: var(--c2); }
+.stat:nth-child(7n+3)::before { background: var(--c3); }
+.stat:nth-child(7n+4)::before { background: var(--c4); }
+.stat:nth-child(7n+5)::before { background: var(--c6); }
+.stat:nth-child(7n+6)::before { background: var(--c7); }
+.stat::before { height: 5px; }
+
+/* The isometric skyline that builds itself on load */
+.skyline {
+  width: 100%;
+  max-width: 1120px;
+  margin: 2rem auto -0.5rem;
+  padding: 0 0.5rem;
+  overflow: visible;
+}
+.skyline svg { width: 100%; height: auto; display: block; overflow: visible; }
+.bldg {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+}
+.bldg.rise {
+  transition: transform 0.75s cubic-bezier(0.2, 0.85, 0.25, 1);
+  transform: scaleY(1);
+}
+.cloud { opacity: 0.9; }
+:root[data-theme="dark"] .cloud { opacity: 0.12; }
+.sky-star { opacity: 0; }
+:root[data-theme="dark"] .sky-star { opacity: 0.8; }
+
+/* Flat window bar reads nicely on the light theme too */
+.card-bar { background: var(--bg-2); }
+:root[data-theme="dark"] .card-bar { background: #0f2742; }
+
+/* Keep the map from feeling flat-shadowed too harshly */
+#map { border-width: 2px; }

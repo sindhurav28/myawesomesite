@@ -7,11 +7,11 @@
   <meta name="description" content="K&S: making the world a better place, one destination at a time." />
 
   <!-- set theme before paint to avoid a flash -->
-  <script>(function(){try{var t=localStorage.getItem('kns-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <script>(function(){try{var t=localStorage.getItem('kns-theme-v2')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 
   <!-- Leaflet map library (bundled locally — no external dependency) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css?v=5" />
+  <link rel="stylesheet" href="css/styles.css?v=6" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥧</text></svg>" />
 </head>
 <body>
@@ -26,6 +26,7 @@
     <h1 id="hero-title" data-text="K&amp;S Travel Journal">K&amp;S Travel Journal</h1>
     <p class="subtitle">Making the world a better place, one destination at a time.™</p>
     <p class="subtitle" style="font-size:0.9rem;opacity:0.75">// just like you wanted.. :P</p>
+    <div class="skyline"><svg id="skyline" aria-hidden="true"></svg></div>
   </header>
 
   <!-- ================= LAUNCH ANNOUNCEMENT (birthday message) ================= -->
@@ -104,9 +105,10 @@
 
   <!-- Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="js/data.js?v=5"></script>
-  <script src="js/theme.js?v=5"></script>
-  <script src="js/main.js?v=5"></script>
-  <script src="js/easter.js?v=5"></script>
+  <script src="js/data.js?v=6"></script>
+  <script src="js/theme.js?v=6"></script>
+  <script src="js/skyline.js?v=6"></script>
+  <script src="js/main.js?v=6"></script>
+  <script src="js/easter.js?v=6"></script>
 </body>
 </html>
