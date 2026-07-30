@@ -868,6 +868,7 @@ a { color: var(--accent); }
   cursor: grab;
 }
 .valley.grabbing { cursor: grabbing; }
+#world3d { position: absolute; inset: 0; display: block; width: 100% !important; height: 100% !important; touch-action: none; cursor: grab; }
 #world { width: 100%; height: 100%; display: block; touch-action: none; user-select: none; }
 #world text { pointer-events: none; }
 #world .wobj { cursor: pointer; }
