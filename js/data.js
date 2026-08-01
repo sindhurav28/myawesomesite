@@ -124,6 +124,21 @@ const PLACES = [
     photos: []
   },
   {
+    id: "myrtle-beach-2023",
+    name: "Myrtle Beach",
+    subtitle: "Sun, sand & the boardwalk",
+    date: "July 2023",
+    sort: "2023-07-25",
+    coords: [33.6891, -78.8867],
+    country: "USA",
+    region: "South Carolina",
+    category: "beach",
+    emoji: "🏖️",
+    nationalParks: 0,
+    memory: "Beach days on the South Carolina coast. Add your memories here.",
+    photos: []
+  },
+  {
     id: "cancun-2023",
     name: "Cancún, Mexico",
     subtitle: "Turquoise water & sunshine 🏝️",
