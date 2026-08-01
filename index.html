@@ -9,7 +9,8 @@
   <script>(function(){try{var t=localStorage.getItem('kns-theme-v2')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js"}}</script>
 
-  <link rel="stylesheet" href="css/styles.css?v=11" />
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="css/styles.css?v=12" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥧</text></svg>" />
 </head>
 <body class="app">
@@ -17,6 +18,8 @@
 
   <!-- ======================= K&S VALLEY (the whole experience) ======================= -->
   <section class="valley" id="valley">
+    <div id="countrymap"></div>
+
     <div class="valley-title">
       <h1 id="scene-title">K&amp;S Valley 🥧</h1>
       <p id="breadcrumb">drag to explore · click a building or country</p>
@@ -64,9 +67,10 @@
     </div>
   </template>
 
-  <script src="js/data.js?v=11"></script>
-  <script src="js/theme.js?v=11"></script>
-  <script src="js/easter.js?v=11"></script>
-  <script type="module" src="js/world3d.js?v=11"></script>
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/data.js?v=12"></script>
+  <script src="js/theme.js?v=12"></script>
+  <script src="js/easter.js?v=12"></script>
+  <script type="module" src="js/world3d.js?v=12"></script>
 </body>
 </html>

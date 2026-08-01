@@ -49,7 +49,7 @@ const DAY = { sky: 0x9fd3f0, fog: 0xbfe4f5, ground: 0x8fb96a, amb: 0.85 };
 const NIGHT = { sky: 0x0a1c30, fog: 0x0a1c30, ground: 0x24405c, amb: 0.5 };
 let themeCol = DAY;
 scene.background = new THREE.Color(themeCol.sky);
-scene.fog = new THREE.Fog(themeCol.fog, 320, 620);
+scene.fog = new THREE.Fog(themeCol.fog, 560, 1600);
 
 let camera, controls;
 function makeCamera() {
@@ -59,7 +59,7 @@ function makeCamera() {
   camera.lookAt(0, 0, 0);
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = 0.08;
-  controls.minPolarAngle = 0.35; controls.maxPolarAngle = 1.28;
+  controls.minPolarAngle = 0.05; controls.maxPolarAngle = Math.PI - 0.06; // allow going under the island
   controls.minZoom = 0.5; controls.maxZoom = 4; controls.zoomSpeed = 0.9;
   controls.target.set(0, 8, 0);
 }
@@ -230,8 +230,13 @@ function addPick(obj) { pickables.push(obj); }
 
 /* ground */
 function buildGround() {
-  const base = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.MeshStandardMaterial({ color: 0x6fae5a, roughness: 1 }));
-  base.rotation.x = -Math.PI/2; base.receiveShadow = true; cityGroup.add(base);
+  // floating island: grass-topped slab + a chunky earth underside
+  const grassMat = new THREE.MeshStandardMaterial({ color: 0x7bbf5c, roughness: 1 });
+  const dirtMat = new THREE.MeshStandardMaterial({ color: 0x7a5a3a, roughness: 1 });
+  const slab = new THREE.Mesh(new THREE.BoxGeometry(540, 30, 540), [dirtMat,dirtMat,grassMat,dirtMat,dirtMat,dirtMat]);
+  slab.position.y = -15; slab.receiveShadow = true; slab.castShadow = true; cityGroup.add(slab);
+  const chunk = new THREE.Mesh(new THREE.ConeGeometry(360, 240, 8), new THREE.MeshStandardMaterial({ color: 0x6b4d30, roughness: 1, flatShading: true }));
+  chunk.rotation.x = Math.PI; chunk.position.y = -150; chunk.receiveShadow = true; cityGroup.add(chunk);
   // block plazas (concrete) + roads (asphalt grid)
   const road = new THREE.MeshStandardMaterial({ color: 0x3e444d, roughness: 1 });
   const plaza = new THREE.MeshStandardMaterial({ color: 0xc9ced6, roughness: 1 });
@@ -327,37 +332,34 @@ function buildGate(country, x, z) {
 }
 
 /* ---------------- country 3D relief ---------------- */
+let lmap = null, lmarkers = [];
 function showCountry(name) {
-  cityGroup.visible = false; countryGroup.visible = true;
-  while (countryGroup.children.length) countryGroup.remove(countryGroup.children[0]);
-  pickables.length = 0;
-  const outline = OUTLINES[name], places = byCountry[name], m = COUNTRY[name];
-  let minL=1e9,maxL=-1e9,minA=1e9,maxA=-1e9;
-  outline.forEach(p => { minL=Math.min(minL,p[0]);maxL=Math.max(maxL,p[0]);minA=Math.min(minA,p[1]);maxA=Math.max(maxA,p[1]); });
-  const S = 260 / (maxL - minL), cx = (minL+maxL)/2, cz = (minA+maxA)/2;
-  const shape = new THREE.Shape();
-  outline.forEach((p, i) => { const x=(p[0]-cx)*S, z=-(p[1]-cz)*S; i?shape.lineTo(x,z):shape.moveTo(x,z); });
-  const geo = new THREE.ExtrudeGeometry(shape, { depth: 14, bevelEnabled: true, bevelThickness: 2, bevelSize: 2, bevelSegments: 1 });
-  geo.rotateX(-Math.PI/2);
-  const land = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: m.color, roughness: 0.85 }));
-  land.castShadow = true; land.receiveShadow = true; countryGroup.add(land);
-  places.forEach(p => {
-    const x=(p.coords[1]-cx)*S, z=-(p.coords[0]-cz)*S;
-    const pin = new THREE.Group();
-    const stem = boxMesh(1.2, 18, 1.2, new THREE.MeshStandardMaterial({ color: 0xffffff })); stem.position.y = 9+14; pin.add(stem);
-    const head = new THREE.Mesh(new THREE.SphereGeometry(4.5, 16, 12), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 })); head.position.y = 14+18; head.castShadow = true; pin.add(head);
-    const em = emojiSprite(p.emoji, 10); em.position.set(0, 14+18, 0); pin.add(em);
-    pin.position.set(x, 0, z);
-    pin.userData = { act: () => openPlace(p), tip: p.name + ' · ' + p.date };
-    countryGroup.add(pin); addPick(pin);
-  });
-  controls.target.set(0, 8, 0); camera.zoom = 1; camera.updateProjectionMatrix();
+  cityGroup.visible = false;
+  const el = document.getElementById('countrymap'); el.style.display = 'block';
+  const m = COUNTRY[name], places = byCountry[name];
+  if (window.L) {
+    if (!lmap) {
+      lmap = window.L.map('countrymap', { zoomControl: true });
+      window.L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 19, attribution: '© OpenStreetMap © CARTO' }).addTo(lmap);
+    }
+    lmarkers.forEach(mk => lmap.removeLayer(mk)); lmarkers = [];
+    const bounds = [];
+    places.forEach(p => {
+      const icon = window.L.divIcon({ className: '', html: '<div class="lpin">' + p.emoji + '</div>', iconSize: [36,36], iconAnchor: [18,36] });
+      const mk = window.L.marker(p.coords, { icon }).addTo(lmap);
+      mk.on('click', () => openPlace(p));
+      mk.bindTooltip(p.name + ' · ' + p.date);
+      lmarkers.push(mk); bounds.push(p.coords);
+    });
+    setTimeout(() => { lmap.invalidateSize(); if (bounds.length) lmap.fitBounds(bounds, { padding: [70,70], maxZoom: 8 }); }, 60);
+  }
   document.getElementById('scene-title').textContent = name + ' ' + m.flag;
-  document.getElementById('breadcrumb').textContent = 'K&S Valley › ' + name + ' · tap a pin';
+  document.getElementById('breadcrumb').textContent = 'K&S Valley › ' + name + ' · tap a pin (real map)';
   document.getElementById('valley-back').hidden = false;
 }
 function showCity() {
-  countryGroup.visible = false; cityGroup.visible = true;
+  const cm = document.getElementById('countrymap'); if (cm) cm.style.display = 'none';
+  cityGroup.visible = true;
   pickables.length = 0; cityGroup.traverse(o => { if (o.userData && o.userData.act) pickables.push(o); });
   document.getElementById('scene-title').innerHTML = 'K&amp;S Valley 🥧';
   document.getElementById('breadcrumb').textContent = 'drag to explore · enter a country · find the secrets';
@@ -432,7 +434,7 @@ function openStats() {
 }
 
 /* birthday CTA */
-const cta = document.createElement('button'); cta.className = 'valley-cta'; cta.type = 'button'; cta.innerHTML = '🎂 read the birthday message';
+const cta = document.createElement('button'); cta.className = 'valley-cta'; cta.type = 'button'; cta.innerHTML = '🎂 Happy Birthday to you, Kiran! — <b>click here</b>';
 cta.addEventListener('click', openMessage); valley.appendChild(cta);
 
 /* zoom buttons */
