@@ -422,7 +422,7 @@ function openPlace(p) {
 }
 function openStats() {
   const countries = new Set(PLACES.map(p=>p.country)), regions = new Set(PLACES.map(p=>p.region));
-  const parks = PLACES.reduce((s,p)=>s+(p.nationalParks||0),0);
+  const parks = (window.NATIONAL_PARKS||[]).length;
   const years = new Date().getFullYear() - parseInt(PLACES[0].sort.slice(0,4),10);
   const miles = Math.floor(window.totalJourneyMiles/100)*100;
   const counts = {}; PLACES.forEach(p=>{ const y=p.sort.slice(0,4); counts[y]=(counts[y]||0)+1; });

@@ -579,7 +579,9 @@ const CATEGORIES = {
 /* The specific national parks we've set foot in (used by the stat pop-up) */
 const NATIONAL_PARKS = [
   "Olympic 🌲", "Mount Rainier 🏔️", "North Cascades 🏞️",
-  "Death Valley 🏜️", "Crater Lake 🌊", "Zion 🧡"
+  "Death Valley 🏜️", "Crater Lake 🌊", "Zion 🧡",
+  "Hawaii Volcanoes 🌋", "Great Smoky Mountains 🌫️",
+  "Joshua Tree 🌵", "Antelope Canyon 🏜️"
 ];
 window.NATIONAL_PARKS = NATIONAL_PARKS;
 
